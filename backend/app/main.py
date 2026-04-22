@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 
-from .database import Base, engine
+from app.database import Base, engine
 from .routes import auth, products, orders, chat, size, memory_chat, image_search, analytics, refund, fraud, pricing
 # from app.routes import search, recommend
 
@@ -11,7 +11,8 @@ from .routes import auth, products, orders, chat, size, memory_chat, image_searc
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title="BharathX Store API")
+
 
 origins = [
     "http://localhost:5173",
@@ -45,3 +46,8 @@ app.include_router(pricing.router)
 @app.get("/")
 def home():
     return {"message": "Backend Running"}
+
+
+@app.on_event("startup")
+def startup():
+    Base.metadata.create_all(bind=engine)
