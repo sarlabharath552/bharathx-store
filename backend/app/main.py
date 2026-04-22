@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 from .database import Base, engine
-from .routes import auth, products, orders, chat, search, recommend, size, memory_chat, image_search, analytics, refund, fraud, pricing
+from .routes import auth, products, orders, chat, size, memory_chat, image_search, analytics, refund, fraud, pricing
+from app.routes import search, recommend
 
 
 
@@ -29,8 +30,8 @@ app.include_router(auth.router)
 app.include_router(products.router)
 app.include_router(orders.router)
 app.include_router(chat.router)
-app.include_router(search.router)
-app.include_router(recommend.router)
+#app.include_router(search.router)
+#app.include_router(recommend.router)
 app.include_router(size.router)
 app.include_router(memory_chat.router)
 app.include_router(image_search.router)
