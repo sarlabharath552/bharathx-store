@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .database import Base, engine
 from .routes import auth, products, orders, chat, size, memory_chat, image_search, analytics, refund, fraud, pricing
-from app.routes import search, recommend
+# from app.routes import search, recommend
 
 
 
