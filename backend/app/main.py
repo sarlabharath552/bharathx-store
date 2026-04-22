@@ -1,18 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-
 from app.database import Base, engine
-from .routes import auth, products, orders, chat, size, memory_chat, image_search, analytics, refund, fraud, pricing
-# from app.routes import search, recommend
+from app.routes import auth, products, orders, chat, size, memory_chat, image_search, analytics, refund, fraud, pricing
 
-
-
-
-Base.metadata.create_all(bind=engine)
-
-app = FastAPI(title="BharathX Store API")
-
+app = FastAPI()
 
 origins = [
     "http://localhost:5173",
@@ -27,12 +19,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.on_event("startup")
+def startup():
+    Base.metadata.create_all(bind=engine)
+
 app.include_router(auth.router)
 app.include_router(products.router)
 app.include_router(orders.router)
 app.include_router(chat.router)
-#app.include_router(search.router)
-#app.include_router(recommend.router)
 app.include_router(size.router)
 app.include_router(memory_chat.router)
 app.include_router(image_search.router)
@@ -41,13 +35,6 @@ app.include_router(refund.router)
 app.include_router(fraud.router)
 app.include_router(pricing.router)
 
-
-
 @app.get("/")
 def home():
-    return {"message": "Backend Running"}
-
-
-@app.on_event("startup")
-def startup():
-    Base.metadata.create_all(bind=engine)
+    return {"message": "Backend Running Successfully"}
